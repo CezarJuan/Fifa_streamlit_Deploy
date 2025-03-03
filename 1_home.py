@@ -4,13 +4,15 @@ import webbrowser
 from datetime import datetime
 
 #importa dados selecionando valores filtrados
-if "data" not in st.session_state:
-    df_data = pd.read_csv('datasets\CLEAN_FIFA23_official_data.csv')
-    df_data = df_data[df_data['Contract Valid Until']>= datetime.today().year]
-    df_data = df_data[df_data['Value(£)']>0]
-    df_data = df_data.sort_values(by = 'Overall', ascending=False)
-    st.session_state['data'] = df_data
+import streamlit as st
+import pandas as pd
 
+st.title("Upload do Arquivo de Dados")
+uploaded_file = st.file_uploader("Carregue o arquivo CSV", type=["csv"])
+
+if uploaded_file is not None:
+    df_data = pd.read_csv(uploaded_file)
+    st.success("Arquivo carregado com sucesso!")
 
 
 #Titulo da Home
